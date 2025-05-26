@@ -1,0 +1,115 @@
+[gd_scene load_steps=20 format=3 uid="uid://brvpj1w5nrgsf"]
+
+[ext_resource type="Script" uid="uid://c0gjxrhsy8ywi" path="res://scenes/actor.gd" id="1_x4c43"]
+[ext_resource type="Script" uid="uid://im66u7nnpao6" path="res://scripts/behavior/SeekBehavior.gd" id="2_0qi0m"]
+[ext_resource type="Script" uid="uid://bi2vw8m8ppvxm" path="res://scripts/behavior/FleeBehavior.gd" id="3_35erh"]
+[ext_resource type="Script" uid="uid://xfupvyythvca" path="res://scripts/behavior/ArriveBehavior.gd" id="4_w6j74"]
+[ext_resource type="Script" uid="uid://dpejan8y6vqj6" path="res://scripts/behavior/PursuitBehavior.gd" id="5_0jvkp"]
+[ext_resource type="Script" uid="uid://b70rxpiqya14r" path="res://scripts/behavior/EvadeBehavior.gd" id="6_7i7yh"]
+[ext_resource type="Script" uid="uid://b7px2ftsmlrsc" path="res://scripts/behavior/WanderBehavior.gd" id="7_yvg0l"]
+[ext_resource type="Script" uid="uid://2cdgm52w7dn7" path="res://scripts/behavior/ObstacleAvoidanceBehavior.gd" id="8_2gv2x"]
+[ext_resource type="Script" uid="uid://deyr0jxddoxuf" path="res://scripts/behavior/WallAvoidanceBehavior.gd" id="9_6iqic"]
+[ext_resource type="Script" uid="uid://bn647628jf3sb" path="res://scripts/behavior/InterposeBehavior.gd" id="10_2pflr"]
+[ext_resource type="Script" uid="uid://ct7bfpecoijxf" path="res://scripts/behavior/HideBehavior.gd" id="11_lu3a0"]
+[ext_resource type="Script" uid="uid://bvwkvgcwfcawm" path="res://scripts/behavior/PathFollowBehavior.gd" id="12_wptxq"]
+[ext_resource type="Script" uid="uid://5wfv2vlcmddx" path="res://scripts/behavior/OffsetPursuitBehavior.gd" id="13_ml442"]
+[ext_resource type="Script" uid="uid://btcjvu2di7cdw" path="res://scripts/behavior/SeparationFlockBehavior.gd" id="14_slxpf"]
+[ext_resource type="Script" uid="uid://imm3yde7jtv1" path="res://scripts/behavior/AlignmentFlockBehavior.gd" id="15_admo0"]
+[ext_resource type="Script" uid="uid://nwr62yapoh7i" path="res://scripts/behavior/CohesionFlockBehavior.gd" id="16_r46fi"]
+[ext_resource type="PackedScene" uid="uid://8i0ktk5volob" path="res://shapes/pidge.glb" id="17_asua5"]
+[ext_resource type="Script" uid="uid://cruo5uniow6ab" path="res://scripts/behavior/InputBehavior.gd" id="17_okck6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ti3oo"]
+
+[node name="Actor" type="CharacterBody3D"]
+script = ExtResource("1_x4c43")
+max_speed = 150.0
+max_force = 50.0
+
+[node name="SteeringBehaviors" type="Node" parent="."]
+
+[node name="Seek" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("2_0qi0m")
+enabled = false
+
+[node name="Flee" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("3_35erh")
+enabled = false
+
+[node name="Arrive" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("4_w6j74")
+
+[node name="Pursue" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("5_0jvkp")
+
+[node name="Evade" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("6_7i7yh")
+
+[node name="Wander" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("7_yvg0l")
+
+[node name="Obstacle Avoid" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("8_2gv2x")
+magnitude = 3.0
+
+[node name="Wall Avoid" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("9_6iqic")
+
+[node name="Interpose" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("10_2pflr")
+
+[node name="Hide" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("11_lu3a0")
+
+[node name="PathFollow" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("12_wptxq")
+enabled = false
+
+[node name="Offset Pursuit" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("13_ml442")
+enabled = false
+
+[node name="Separation Flock" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("14_slxpf")
+enabled = false
+
+[node name="Alignment Flock" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("15_admo0")
+enabled = false
+
+[node name="Cohesion Flock" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("16_r46fi")
+enabled = false
+
+[node name="Input" type="Node" parent="SteeringBehaviors"]
+script = ExtResource("17_okck6")
+enabled = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ti3oo")
+
+[node name="Forward Whiskers" type="Node3D" parent="."]
+
+[node name="RHandAvoidance" type="RayCast3D" parent="Forward Whiskers"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0, 0)
+target_position = Vector3(0, -6, 0)
+collision_mask = 2
+
+[node name="LHandAvoidance" type="RayCast3D" parent="Forward Whiskers"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0, 0)
+target_position = Vector3(0, -6, 0)
+collision_mask = 2
+
+[node name="Side Whiskers" type="Node3D" parent="."]
+
+[node name="RHandAvoidance" type="RayCast3D" parent="Side Whiskers"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 2
+
+[node name="LHandAvoidance" type="RayCast3D" parent="Side Whiskers"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 2
+
+[node name="pidge" parent="." instance=ExtResource("17_asua5")]

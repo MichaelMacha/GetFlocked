@@ -1,0 +1,241 @@
+[gd_scene load_steps=12 format=3 uid="uid://rxffqo076vj5"]
+
+[ext_resource type="PackedScene" uid="uid://brvpj1w5nrgsf" path="res://scenes/actor.tscn" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://cs7vdr2dcravc" path="res://obstacle.gd" id="2_4wyf3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwgxs"]
+
+[sub_resource type="Sky" id="Sky_4wyf3"]
+sky_material = SubResource("ProceduralSkyMaterial_rwgxs")
+
+[sub_resource type="Environment" id="Environment_k0juu"]
+background_mode = 2
+sky = SubResource("Sky_4wyf3")
+
+[sub_resource type="BoxMesh" id="BoxMesh_nnsk1"]
+size = Vector3(1, 8.22, 6)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rwgxs"]
+points = PackedVector3Array(0.5, 4.11, 3, -0.5, 4.11, 3, 0.5, -4.11, 3, 0.5, 4.11, -3, -0.5, 4.11, -3, -0.5, -4.11, 3, 0.5, -4.11, -3, -0.5, -4.11, -3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4wyf3"]
+points = PackedVector3Array(0.5, 4.11, 3, -0.5, 4.11, 3, 0.5, -4.11, 3, 0.5, 4.11, -3, -0.5, 4.11, -3, -0.5, -4.11, 3, 0.5, -4.11, -3, -0.5, -4.11, -3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k0juu"]
+points = PackedVector3Array(0.5, 4.11, 3, -0.5, 4.11, 3, 0.5, -4.11, 3, 0.5, 4.11, -3, -0.5, 4.11, -3, -0.5, -4.11, 3, 0.5, -4.11, -3, -0.5, -4.11, -3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_71j4m"]
+points = PackedVector3Array(0.5, 4.11, 3, -0.5, 4.11, 3, 0.5, -4.11, 3, 0.5, 4.11, -3, -0.5, 4.11, -3, -0.5, -4.11, 3, 0.5, -4.11, -3, -0.5, -4.11, -3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qfnet"]
+points = PackedVector3Array(0.5, 4.11, 3, -0.5, 4.11, 3, 0.5, -4.11, 3, 0.5, 4.11, -3, -0.5, 4.11, -3, -0.5, -4.11, 3, 0.5, -4.11, -3, -0.5, -4.11, -3)
+
+[node name="World" type="Node3D"]
+
+[node name="Universals" type="Node" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="Universals"]
+transform = Transform3D(0.935246, -0.0438343, 0.351273, -0.353997, -0.115808, 0.928049, 0, -0.992304, -0.123827, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Universals"]
+environment = SubResource("Environment_k0juu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 14.215, 0)
+
+[node name="Actors" type="Node" parent="."]
+
+[node name="Actor" parent="Actors" instance=ExtResource("1_nnsk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51, 0, 0)
+
+[node name="Arrive" parent="Actors/Actor/SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="Actors/Actor/SteeringBehaviors" index="3" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Target")
+enabled = false
+
+[node name="Evade" parent="Actors/Actor/SteeringBehaviors" index="4"]
+enabled = false
+
+[node name="Interpose" parent="Actors/Actor/SteeringBehaviors" index="8"]
+enabled = false
+
+[node name="Hide" parent="Actors/Actor/SteeringBehaviors" index="9" node_paths=PackedStringArray("obstacle_parent")]
+obstacle_parent = NodePath("../../../../Obstacles")
+enabled = false
+
+[node name="Target" parent="Actors" instance=ExtResource("1_nnsk1")]
+max_speed = 2.0
+
+[node name="Arrive" parent="Actors/Target/SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="Actors/Target/SteeringBehaviors" index="3" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Actor")
+
+[node name="Evade" parent="Actors/Target/SteeringBehaviors" index="4" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Actor")
+enabled = false
+
+[node name="Interpose" parent="Actors/Target/SteeringBehaviors" index="8"]
+enabled = false
+
+[node name="Hide" parent="Actors/Target/SteeringBehaviors" index="9" node_paths=PackedStringArray("obstacle_parent")]
+obstacle_parent = NodePath("../../../../Obstacles")
+enabled = false
+
+[node name="Target2" parent="Actors" instance=ExtResource("1_nnsk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.73825, 0, 2.4443)
+max_speed = 2.0
+
+[node name="Arrive" parent="Actors/Target2/SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="Actors/Target2/SteeringBehaviors" index="3"]
+enabled = false
+
+[node name="Evade" parent="Actors/Target2/SteeringBehaviors" index="4" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Actor")
+enabled = false
+
+[node name="Wander" parent="Actors/Target2/SteeringBehaviors" index="5"]
+enabled = false
+
+[node name="Interpose" parent="Actors/Target2/SteeringBehaviors" index="8" node_paths=PackedStringArray("target1", "target2")]
+target1 = NodePath("../../../Actor")
+target2 = NodePath("../../../Target")
+enabled = false
+
+[node name="Hide" parent="Actors/Target2/SteeringBehaviors" index="9" node_paths=PackedStringArray("target", "obstacle_parent")]
+target = NodePath("../../../Target")
+obstacle_parent = NodePath("../../../../Obstacles")
+
+[node name="Target3" parent="Actors" instance=ExtResource("1_nnsk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96235, 0, 12.7001)
+max_speed = 2.0
+
+[node name="Arrive" parent="Actors/Target3/SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="Actors/Target3/SteeringBehaviors" index="3"]
+enabled = false
+
+[node name="Evade" parent="Actors/Target3/SteeringBehaviors" index="4" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Actor")
+enabled = false
+
+[node name="Wander" parent="Actors/Target3/SteeringBehaviors" index="5"]
+enabled = false
+
+[node name="Interpose" parent="Actors/Target3/SteeringBehaviors" index="8" node_paths=PackedStringArray("target1", "target2")]
+target1 = NodePath("../../../Actor")
+target2 = NodePath("../../../Target")
+enabled = false
+
+[node name="Hide" parent="Actors/Target3/SteeringBehaviors" index="9" node_paths=PackedStringArray("target", "obstacle_parent")]
+target = NodePath("../../../Target")
+obstacle_parent = NodePath("../../../../Obstacles")
+enabled = false
+
+[node name="PathFollow" parent="Actors/Target3/SteeringBehaviors" index="10"]
+path = Array[Vector3]([Vector3(0, 5, 4), Vector3(2, 5, 0), Vector3(0, 5, -2), Vector3(-1, 5, 0)])
+enabled = true
+
+[node name="Target4" parent="Actors" instance=ExtResource("1_nnsk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.30269, -7.62939e-06, 17.4277)
+max_speed = 2.0
+
+[node name="Arrive" parent="Actors/Target4/SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="Actors/Target4/SteeringBehaviors" index="3"]
+enabled = false
+
+[node name="Evade" parent="Actors/Target4/SteeringBehaviors" index="4" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Actor")
+enabled = false
+
+[node name="Wander" parent="Actors/Target4/SteeringBehaviors" index="5"]
+enabled = false
+
+[node name="Interpose" parent="Actors/Target4/SteeringBehaviors" index="8" node_paths=PackedStringArray("target1", "target2")]
+target1 = NodePath("../../../Actor")
+target2 = NodePath("../../../Target")
+enabled = false
+
+[node name="Hide" parent="Actors/Target4/SteeringBehaviors" index="9" node_paths=PackedStringArray("target", "obstacle_parent")]
+target = NodePath("../../../Target")
+obstacle_parent = NodePath("../../../../Obstacles")
+enabled = false
+
+[node name="PathFollow" parent="Actors/Target4/SteeringBehaviors" index="10"]
+path = Array[Vector3]([Vector3(0, 5, 4), Vector3(2, 5, 0), Vector3(0, 5, -2), Vector3(-1, 5, 0)])
+
+[node name="Offset Pursuit" parent="Actors/Target4/SteeringBehaviors" index="11" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Target3")
+offset = Vector3(0.2, 0, 0)
+enabled = true
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.63914, 0, 0)
+script = ExtResource("2_4wyf3")
+assumed_radius = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/StaticBody3D"]
+mesh = SubResource("BoxMesh_nnsk1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_rwgxs")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.95674, 0, 0)
+script = ExtResource("2_4wyf3")
+assumed_radius = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/StaticBody3D2"]
+mesh = SubResource("BoxMesh_nnsk1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/StaticBody3D2"]
+shape = SubResource("ConvexPolygonShape3D_4wyf3")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(-0.0315328, 0, 0.999503, 0, 1, 0, -0.999503, 0, -0.0315328, 1.9078, 0, 6.24279)
+script = ExtResource("2_4wyf3")
+assumed_radius = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/StaticBody3D3"]
+mesh = SubResource("BoxMesh_nnsk1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/StaticBody3D3"]
+shape = SubResource("ConvexPolygonShape3D_k0juu")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(-0.0315328, 0, 0.999503, 0, 1, 0, -0.999503, 0, -0.0315328, 1.51389, 0, -6.24279)
+script = ExtResource("2_4wyf3")
+assumed_radius = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/StaticBody3D4"]
+mesh = SubResource("BoxMesh_nnsk1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/StaticBody3D4"]
+shape = SubResource("ConvexPolygonShape3D_71j4m")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(-0.095514, 0.384213, 0.91829, -0.984855, -0.170571, -0.0310707, 0.144696, -0.907351, 0.394687, 1.11427, -6.1513, 0.903754)
+script = ExtResource("2_4wyf3")
+assumed_radius = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacles/StaticBody3D6"]
+mesh = SubResource("BoxMesh_nnsk1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/StaticBody3D6"]
+shape = SubResource("ConvexPolygonShape3D_qfnet")
+
+[editable path="Actors/Actor"]
+[editable path="Actors/Target"]
+[editable path="Actors/Target2"]
+[editable path="Actors/Target3"]
+[editable path="Actors/Target4"]

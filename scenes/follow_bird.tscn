@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://vv6i4sg5lm7y"]
+
+[ext_resource type="PackedScene" uid="uid://brvpj1w5nrgsf" path="res://scenes/actor.tscn" id="1_vufa0"]
+[ext_resource type="Script" uid="uid://b31lwp3fm5ukl" path="res://Follow Actor.gd" id="2_ggvvm"]
+[ext_resource type="AudioStream" uid="uid://brly3vbkbdfva" path="res://squawk.ogg" id="3_y1q87"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sq62l"]
+radius = 8.73876
+
+[node name="Follow Bird" instance=ExtResource("1_vufa0")]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("2_ggvvm")
+offset = Vector3(0, 0, 0)
+max_speed = 200.0
+max_force = 10.0
+
+[node name="Arrive" parent="SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Evade" parent="SteeringBehaviors" index="4"]
+enabled = false
+
+[node name="Wander" parent="SteeringBehaviors" index="5"]
+enabled = false
+
+[node name="Interpose" parent="SteeringBehaviors" index="8"]
+enabled = false
+
+[node name="Hide" parent="SteeringBehaviors" index="9"]
+enabled = false
+
+[node name="PathFollow" parent="SteeringBehaviors" index="10"]
+looping = false
+
+[node name="Separation Flock" parent="SteeringBehaviors" index="12"]
+flock_radius = 4.785
+enabled = true
+
+[node name="Cohesion Flock" parent="SteeringBehaviors" index="14"]
+enabled = true
+
+[node name="Squawk" type="AudioStreamPlayer3D" parent="." index="5"]
+stream = ExtResource("3_y1q87")
+pitch_scale = 1.68
+
+[node name="Squawk Detector" type="Area3D" parent="." index="6"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Squawk Detector" index="0"]
+shape = SubResource("SphereShape3D_sq62l")
+
+[connection signal="body_exited" from="Squawk Detector" to="." method="_on_squawk_detector_body_exited"]

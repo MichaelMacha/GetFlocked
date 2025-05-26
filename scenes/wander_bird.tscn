@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dypldt26karad"]
+
+[ext_resource type="PackedScene" uid="uid://brvpj1w5nrgsf" path="res://scenes/actor.tscn" id="1_47iwu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47iwu"]
+albedo_color = Color(1, 0.902932, 0.752325, 1)
+
+[node name="Wander Bird" instance=ExtResource("1_47iwu")]
+collision_layer = 24
+collision_mask = 9
+max_speed = 75.0
+max_force = 10.0
+
+[node name="Arrive" parent="SteeringBehaviors" index="2"]
+enabled = false
+
+[node name="Pursue" parent="SteeringBehaviors" index="3"]
+enabled = false
+
+[node name="Evade" parent="SteeringBehaviors" index="4"]
+enabled = false
+
+[node name="Wander" parent="SteeringBehaviors" index="5"]
+wander_jitter = 0.06
+enabled = false
+
+[node name="Interpose" parent="SteeringBehaviors" index="8"]
+enabled = false
+
+[node name="Hide" parent="SteeringBehaviors" index="9"]
+enabled = false
+
+[node name="Input" parent="SteeringBehaviors" index="15"]
+wander_jitter = 0.06
+enabled = true
+
+[node name="Pidge" parent="pidge" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_47iwu")
+
+[editable path="pidge"]

@@ -1,0 +1,238 @@
+[gd_scene load_steps=15 format=3 uid="uid://dej0ql7ijbtb"]
+
+[ext_resource type="Script" uid="uid://2wj5kr1dxm2o" path="res://scenes/city.gd" id="1_movw8"]
+[ext_resource type="Script" uid="uid://b7g7akn4lw1mw" path="res://scripts/camera_3d.gd" id="1_rqxma"]
+[ext_resource type="Script" uid="uid://doa63rk842gc6" path="res://scripts/status.gd" id="2_2jj31"]
+[ext_resource type="PackedScene" uid="uid://dypldt26karad" path="res://scenes/wander_bird.tscn" id="2_58ubr"]
+[ext_resource type="PackedScene" uid="uid://vv6i4sg5lm7y" path="res://scenes/follow_bird.tscn" id="3_rqxma"]
+[ext_resource type="PackedScene" uid="uid://bc61bijmkfopi" path="res://scenes/goal.tscn" id="5_oacpt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwgxs"]
+
+[sub_resource type="Sky" id="Sky_4wyf3"]
+sky_material = SubResource("ProceduralSkyMaterial_rwgxs")
+
+[sub_resource type="Environment" id="Environment_k0juu"]
+background_mode = 2
+sky = SubResource("Sky_4wyf3")
+glow_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_58ubr"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rqxma"]
+frequency = 0.0303
+fractal_octaves = 4
+fractal_gain = 1.245
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_movw8"]
+color_ramp = SubResource("Gradient_58ubr")
+noise = SubResource("FastNoiseLite_rqxma")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oacpt"]
+albedo_texture = SubResource("NoiseTexture2D_movw8")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2jj31"]
+material = SubResource("StandardMaterial3D_oacpt")
+size = Vector2(2000, 2000)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_movw8")
+
+[node name="Universals" type="Node" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="Universals"]
+transform = Transform3D(0.935246, -0.0438343, 0.351273, -0.353997, -0.115808, 0.928049, 0, -0.992304, -0.123827, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Universals"]
+environment = SubResource("Environment_k0juu")
+
+[node name="Status" type="Node" parent="Universals"]
+script = ExtResource("2_2jj31")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 14.215, 0)
+script = ExtResource("1_rqxma")
+target = NodePath("../Actors/Wander Bird")
+follow_distance = 12.0
+follow_height = 6.0
+
+[node name="Actors" type="Node" parent="."]
+
+[node name="Wander Bird" parent="Actors" instance=ExtResource("2_58ubr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 71.1591, 0)
+
+[node name="Follow Bird" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird2" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird3" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird4" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird5" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird6" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird7" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird8" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird9" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird10" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird11" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird12" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird13" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird14" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird15" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird16" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird17" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird18" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird19" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird20" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird21" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird22" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird23" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird24" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird25" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird26" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32883, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 0, -2)
+
+[node name="Follow Bird27" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, -2.37089)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird28" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04034, 70.4957, 0.0196142)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird29" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42263, 70.4957, 0.358344)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Follow Bird30" parent="Actors" node_paths=PackedStringArray("followed") instance=ExtResource("3_rqxma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.482188, 70.4957, 2.83912)
+followed = NodePath("../Wander Bird")
+offset = Vector3(0, 1, -1)
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2jj31")
+
+[node name="Goals" type="Node" parent="."]
+
+[node name="Goal" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(1, 0, 0, 0, 0.130353, 0.991468, 0, -0.991468, 0.130353, 0, 73.3956, 157.546)
+
+[node name="Goal2" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(0.719364, 0.688706, -0.0905476, 0, 0.130353, 0.991468, 0.694633, -0.713226, 0.0937713, -206.531, 73.3956, 428.125)
+
+[node name="Goal3" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(-0.899649, 0.432888, -0.0569139, 0, 0.130353, 0.991468, 0.436613, 0.891973, -0.117272, -390.973, 73.3956, -185.133)
+
+[node name="Goal4" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(0.881683, -0.467817, 0.0615062, -3.35145e-09, 0.130353, 0.991468, -0.471843, -0.87416, 0.11493, 100.97, 73.3956, -487.992)
+
+[node name="Goal5" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(0.562271, 0.819897, -0.107796, -6.86696e-09, 0.130353, 0.991467, 0.826953, -0.557474, 0.0732938, 450.355, 73.3956, 252.638)
+
+[node name="Goal6" parent="Goals" instance=ExtResource("5_oacpt")]
+transform = Transform3D(-0.648027, 0.755119, -0.0992792, -6.86696e-09, 0.130353, 0.991467, 0.761617, 0.642497, -0.0844723, 180.972, 73.3955, 538.792)
